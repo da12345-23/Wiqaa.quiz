@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>أي حلاوة من طفولتك أنت؟</title>
+<meta name="description" content="اختبار سريع من ٦ أسئلة يكشف لك أي حلاوة من طفولتك تشبهك. جرّبه وشارك نتيجتك!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wiqaa.site/">
+<meta property="og:title" content="أي حلاوة من طفولتك أنت؟">
+<meta property="og:description" content="اختبار سريع من ٦ أسئلة يكشف لك أي حلاوة من طفولتك تشبهك. جرّبه وشارك نتيجتك!">
+<meta property="og:image" content="https://wiqaa.site/og/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@WIQAA_">
+<meta name="twitter:title" content="أي حلاوة من طفولتك أنت؟">
+<meta name="twitter:description" content="اختبار سريع من ٦ أسئلة يكشف لك أي حلاوة من طفولتك تشبهك. جرّبه وشارك نتيجتك!">
+<meta name="twitter:image" content="https://wiqaa.site/og/cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+/* VOICE: loud, nostalgic, 90s Saturday-morning cartoon
+   IDEA: a corner-shop candy counter — striped wrappers, price tickets, a shop marquee
+   PICTURE: tilted logo sticker on the cover; the sweet bursting out of a sunburst on the result
+   COLOUR and TYPE: sky #66b8f5 halftone ground, purple #7b4fbf, teal #5ccfd0, navy #2b1a5c; Lalezar loud, Cairo for reading
+   LAYOUT: one 560px column; ribbon top, content, marquee bottom */
+:root,:root[data-theme=dark],:root[data-theme=light]{
+  color-scheme:light;
+  --sky:#66b8f5;--sky2:#4fa6e8;--purple:#7b4fbf;--purple2:#9b74d6;--teal:#5ccfd0;--teal2:#8fe3e3;--navy:#2b1a5c;--white:#fff;--cream:#fffaf0;
+  --line:3.5px solid var(--navy);
+  --disp:"Lalezar","Cairo",system-ui,sans-serif;
+}
+*{box-sizing:border-box;min-width:0}
+html,body{background:var(--sky);color:var(--navy)}
+body{margin:0;min-height:100vh;min-height:100dvh;font:700 17px/1.6 "Cairo",system-ui,-apple-system,"Segoe UI",Tahoma,"Geeza Pro",sans-serif;overflow-x:clip;
+  background-image:radial-gradient(rgba(255,255,255,.28) 2.2px,transparent 2.6px),radial-gradient(circle at 50% 30%,#7cc4f8,var(--sky) 60%,var(--sky2));
+  background-size:18px 18px,100% 100%;background-attachment:fixed}
+h1,h2{font-family:var(--disp);font-weight:400;line-height:1.1;margin:0;text-wrap:balance}
+
+/* candy-stripe ribbon across the top */
+.ribbon{height:22px;border-bottom:var(--line);background:repeating-linear-gradient(-45deg,var(--purple) 0 16px,#fff 16px 26px,var(--teal) 26px 42px,#fff 42px 52px)}
+/* shop marquee along the bottom */
+.marquee{position:fixed;inset-inline:0;bottom:0;z-index:5;background:var(--navy);color:#fff;border-top:var(--line);overflow:hidden;white-space:nowrap;padding:6px 0 calc(6px + env(safe-area-inset-bottom));font:400 17px/1.3 var(--disp)}
+.marquee div{display:inline-block;animation:slide 22s linear infinite;padding-inline-start:100%}
+@keyframes slide{to{transform:translateX(100%)}}
+.marquee span{color:var(--teal2);margin:0 14px}
+
+/* floating doodles */
+.doodles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.doodles svg{position:absolute;animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(8deg)}}
+
+.wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:18px 18px 80px;min-height:calc(100dvh - 22px);display:flex;flex-direction:column;justify-content:center}
+.screen{display:none}
+.screen.on{display:block;animation:pop .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.92) rotate(-1deg)}to{opacity:1;transform:none}}
+
+/* buttons */
+.btn{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;padding:10px 18px;border:var(--line);border-radius:999px;
+  background:var(--purple);color:#fff;font:400 24px/1.2 var(--disp);text-decoration:none;cursor:pointer;box-shadow:0 7px 0 var(--navy);
+  transition:transform .08s,box-shadow .08s;-webkit-tap-highlight-color:transparent;overflow:hidden}
+.btn:active{transform:translateY(5px);box-shadow:0 2px 0 var(--navy)}
+.btn.stripe{background:repeating-linear-gradient(-45deg,var(--teal) 0 14px,var(--teal2) 14px 28px);color:var(--navy)}
+.btn.white{background:var(--cream);color:var(--navy)}
+.btn:focus-visible,.ans:focus-visible,.back:focus-visible{outline:4px solid #fff;outline-offset:4px}
+
+/* cover */
+#cover{text-align:center}
+.stage{position:relative}
+.hero{position:absolute;z-index:2;width:clamp(92px,25vw,190px);height:auto;filter:drop-shadow(0 6px 0 rgba(43,26,92,.45));pointer-events:none}
+.hero.boy{left:calc(50% - 50vw);top:-6px;animation:flyL 4.5s ease-in-out infinite}
+.hero.girl{right:calc(50% - 50vw);top:36px;animation:flyR 5s ease-in-out infinite}
+@keyframes flyL{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+@keyframes flyR{0%,100%{transform:translateY(-6px) rotate(3deg)}50%{transform:translateY(8px) rotate(-2deg)}}
+.logo{width:min(48vw,230px);height:auto;display:block;margin:0 auto;transform:rotate(-6deg);filter:drop-shadow(5px 7px 0 var(--navy))}
+.title{font-size:clamp(44px,12.5vw,66px);color:#fff;margin:14px 0 6px;-webkit-text-stroke:3px var(--navy);paint-order:stroke fill;
+  text-shadow:0 4px 0 var(--navy),0 8px 0 var(--purple),0 11px 0 var(--navy)}
+.bubble{position:relative;z-index:0;display:inline-block;background:var(--cream);border:var(--line);border-radius:22px;padding:10px 20px;margin:18px 0 26px;font-size:18px;transform:rotate(1.5deg);box-shadow:4px 5px 0 var(--navy)}
+.bubble:after{content:"";position:absolute;top:-13px;left:50%;margin-left:-11px;width:22px;height:22px;background:var(--cream);border-top:var(--line);border-left:var(--line);transform:rotate(45deg)}
+#start{max-width:340px;margin:0 auto;font-size:30px;animation:nudge 2.4s ease-in-out infinite}
+@keyframes nudge{0%,80%,100%{transform:none}86%{transform:rotate(-3deg) scale(1.04)}93%{transform:rotate(3deg) scale(1.04)}}
+
+/* ticket-style question card */
+.ticket{background:var(--cream);border:var(--line);border-radius:22px;box-shadow:0 8px 0 var(--navy);overflow:hidden}
+.stub{background:var(--purple);color:#fff;padding:12px 16px 14px;border-bottom:3px dashed var(--navy);position:relative}
+.stub:before,.stub:after{content:"";position:absolute;bottom:-14px;width:24px;height:24px;border-radius:50%;background:var(--sky);border:var(--line)}
+.stub:before{right:-15px}.stub:after{left:-15px}
+.stubrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.count{font:400 22px/1 var(--disp);letter-spacing:.5px}
+.back{background:#fff;color:var(--navy);border:2.5px solid var(--navy);border-radius:999px;font:800 14px "Cairo",system-ui,sans-serif;cursor:pointer;min-height:36px;padding:0 12px}
+.back[hidden]{visibility:hidden;display:inline-block}
+.pieces{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.pieces i{height:16px;border-radius:999px;border:2.5px solid var(--navy);background:rgba(255,255,255,.25);transition:background .3s}
+.pieces i.done{background:repeating-linear-gradient(-45deg,var(--teal) 0 6px,var(--teal2) 6px 12px)}
+.qbody{padding:22px 16px 20px}
+.q{font-size:clamp(30px,8vw,40px);text-align:center;margin-bottom:20px}
+.answers{display:grid;gap:12px}
+.ans{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;padding:10px 14px;text-align:start;color:var(--navy);
+  border:var(--line);border-radius:16px;box-shadow:0 5px 0 var(--navy);font:800 17px/1.45 "Cairo",system-ui,sans-serif;cursor:pointer;
+  transition:transform .1s,box-shadow .1s;-webkit-tap-highlight-color:transparent}
+.ans:nth-child(1){background:#e6f6ff;transform:rotate(-.6deg)}
+.ans:nth-child(2){background:#efe6fb;transform:rotate(.5deg)}
+.ans:nth-child(3){background:#dcf7f7;transform:rotate(-.4deg)}
+.ans:nth-child(4){background:#fff;transform:rotate(.6deg)}
+.ans:nth-child(5){background:#efe6fb;transform:rotate(-.5deg)}
+.ans b{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--purple);color:#fff;border:2.5px solid var(--navy);font:400 22px/1 var(--disp);transform:rotate(-8deg)}
+.ans:nth-child(odd) b{background:var(--teal);color:var(--navy);transform:rotate(7deg)}
+@media (hover:hover){.ans:hover{transform:translateY(-2px) rotate(0)}}
+.ans:active,.ans.picked{transform:translateY(4px) rotate(0)!important;box-shadow:0 1px 0 var(--navy);background:var(--teal2)!important}
+
+/* result: candy wrapper with crimped ends */
+#result{text-align:center}
+.tag{display:inline-block;background:var(--navy);color:#fff;font:400 22px/1 var(--disp);padding:10px 22px 8px;border-radius:12px;transform:rotate(-3deg);margin-bottom:22px;box-shadow:4px 4px 0 var(--purple)}
+.wrapper{position:relative;margin:0 6px}
+.crimp{height:16px;background:conic-gradient(from 135deg at 50% 0,var(--navy) 90deg,#0000 0) 0 0/20px 16px repeat-x}
+.crimp.bot{transform:scaleY(-1)}
+.inner{background:var(--cream);border:var(--line);border-radius:6px;overflow:hidden;margin:-2px 0;box-shadow:0 0 0 0 var(--navy)}
+.burst{position:relative;height:clamp(230px,60vw,290px);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:var(--line);
+  background:repeating-conic-gradient(from 0deg at 50% 55%,var(--purple) 0 12deg,var(--purple2) 12deg 24deg)}
+.burst.teal{background:repeating-conic-gradient(from 0deg at 50% 55%,var(--teal) 0 12deg,var(--teal2) 12deg 24deg)}
+.burst:before{content:"";position:absolute;width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(#fff 0,rgba(255,255,255,.75) 40%,transparent 70%)}
+.burst img{position:relative;display:block;max-height:clamp(200px,52vw,255px);max-width:72%;object-fit:contain;filter:drop-shadow(5px 8px 0 rgba(43,26,92,.55));animation:boom .9s cubic-bezier(.2,1.7,.4,1) .15s both}
+@keyframes boom{from{transform:scale(.2) rotate(-25deg);opacity:0}to{transform:rotate(-4deg);opacity:1}}
+.rbody{padding:18px 18px 22px}
+.rname{font-size:clamp(42px,12vw,58px);color:#fff;-webkit-text-stroke:2.5px var(--navy);paint-order:stroke fill;text-shadow:0 4px 0 var(--navy),0 7px 0 var(--purple);margin-bottom:12px}
+.rdesc{margin:0 0 16px;font-size:18px}
+.pill{display:inline-block;direction:ltr;background:var(--teal);border:2.5px solid var(--navy);border-radius:999px;padding:2px 18px;font:400 20px/1.5 var(--disp);transform:rotate(-2deg)}
+.actions{display:grid;gap:14px;margin-top:26px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.row2 .btn{font-size:21px}
+@media (max-width:380px){.row2{grid-template-columns:minmax(0,1fr)}}
+.mention{display:inline-block;margin:20px auto 0;font:400 21px/1.3 var(--disp);color:var(--navy);background:#fff;border:2.5px dashed var(--navy);border-radius:14px;padding:8px 16px;transform:rotate(1.5deg)}
+.x{width:22px;height:22px;flex:none}
+.btn[aria-busy=true]{opacity:.7;pointer-events:none}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(43,26,92,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px}
+.sheet[hidden]{display:none}
+.sheetbox{width:100%;max-width:460px;max-height:calc(100dvh - 24px);overflow:auto;background:var(--cream);border:var(--line);border-radius:24px;box-shadow:0 8px 0 var(--navy);padding:16px;text-align:center;animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+.sheetbox h3{font:400 26px/1.2 var(--disp);margin:2px 0 10px}
+.sheetbox img{display:block;width:min(100%,300px);height:auto;margin:0 auto 12px;border:3px solid var(--navy);border-radius:14px}
+.steps{margin:0 0 14px;padding:0;list-style:none;font-size:16px}
+.steps li{margin:4px 0}
+.sheetbox .btn{margin-top:10px;font-size:21px;min-height:54px}
+
+@media (prefers-reduced-motion:reduce){
+  .screen.on,.burst img,#start,.marquee div,.doodles svg,.hero{animation:none!important}
+  .burst img{transform:rotate(-4deg)}
+  .marquee div{padding-inline-start:16px}
+}
+</style>
+</head>
+<body>
+<div class="ribbon" aria-hidden="true"></div>
+
+<div class="doodles" aria-hidden="true">
+  <svg style="top:9%;right:6%;width:38px;animation-delay:-1s" viewBox="0 0 40 40"><path d="M20 2l4.5 12.5L37 19l-12.5 4.5L20 36l-4.5-12.5L3 19l12.5-4.5z" fill="#fff" stroke="#2b1a5c" stroke-width="3" stroke-linejoin="round"/></svg>
+  <svg style="top:22%;left:5%;width:30px;animation-delay:-3s" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#5ccfd0" stroke="#2b1a5c" stroke-width="4"/></svg>
+  <svg style="top:64%;right:2%;width:40px;animation-delay:-2s" viewBox="0 0 60 30"><path d="M4 18c8-14 14 10 22-2s14 10 22-2 8-4 8-4" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
+  <svg style="top:70%;left:4%;width:36px;animation-delay:-4s" viewBox="0 0 40 40"><path d="M20 2l4.5 12.5L37 19l-12.5 4.5L20 36l-4.5-12.5L3 19l12.5-4.5z" fill="#7b4fbf" stroke="#2b1a5c" stroke-width="3" stroke-linejoin="round"/></svg>
+  <svg style="top:40%;left:2%;width:22px;animation-delay:-.5s" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#fff" stroke="#2b1a5c" stroke-width="4"/></svg>
+  <svg style="top:84%;right:9%;width:28px;animation-delay:-2.5s" viewBox="0 0 40 40"><path d="M8 8l24 24M32 8L8 32" stroke="#fff" stroke-width="6" stroke-linecap="round"/></svg>
+</div>
+
+<main class="wrap">
+
+  <section id="cover" class="screen on" aria-labelledby="t">
+    <div class="stage">
+      <img class="hero boy" src="/img/boy.png" alt="">
+      <img class="logo" src="/img/logo.png" alt="شعار وقاء ٢">
+      <img class="hero girl" src="/img/girl.png" alt="">
+    </div>
+    <h1 class="title" id="t">أي حلاوة من طفولتك أنت؟</h1>
+    <div class="bubble">ست أسئلة… ونكشف لك الحلاوة اللي تشبهك!</div>
+    <button class="btn stripe" id="start" type="button">اعرف حلاوتي</button>
+  </section>
+
+  <section id="quiz" class="screen" aria-live="polite">
+    <div class="ticket">
+      <div class="stub">
+        <div class="stubrow">
+          <span class="count" id="count">السؤال ١ من ٦</span>
+          <button class="back" id="back" type="button" hidden>→ رجوع</button>
+        </div>
+        <div class="pieces" id="pieces" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="qbody">
+        <h2 class="q" id="qtext"></h2>
+        <div class="answers" id="answers"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="result" class="screen" aria-live="polite">
+    <span class="tag">طلعت لك…</span>
+    <div class="wrapper">
+      <div class="crimp" aria-hidden="true"></div>
+      <div class="inner">
+        <div class="burst" id="burst"><img id="rimg" alt=""></div>
+        <div class="rbody">
+          <h2 class="rname" id="rname"></h2>
+          <p class="rdesc" id="rdesc"></p>
+          <span class="pill" id="pill"></span>
+        </div>
+      </div>
+      <div class="crimp bot" aria-hidden="true"></div>
+    </div>
+    <div class="actions">
+      <a class="btn" id="share" target="_blank" rel="noopener">
+        <svg class="x" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.2 2.3h3.4l-7.4 8.4L23 21.7h-6.8l-5.3-7-6.1 7H1.4l7.9-9L.9 2.3h7l4.8 6.4 5.5-6.4Zm-1.2 17.4h1.9L7 4.2H5Z"/></svg>
+        <span>شارك نتيجتي على X</span></a>
+      <a class="btn stripe" id="follow" target="_blank" rel="noopener"></a>
+      <button class="btn white" id="again" type="button">أعد الاختبار</button>
+    </div>
+    <p class="mention">منشن صديق لازم يجرّب الاختبار</p>
+  </section>
+
+</main>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheetT">
+  <div class="sheetbox">
+    <h3 id="sheetT">صورة نتيجتك جاهزة!</h3>
+    <img id="cardImg" alt="صورة نتيجة الاختبار">
+    <ol class="steps">
+      <li id="steps1">١. احفظ الصورة (أو اضغط عليها مطوّلًا واحفظها)</li>
+      <li>٢. افتح X وأرفق الصورة مع التغريدة</li>
+    </ol>
+    <a class="btn stripe" id="saveImg" download="my-sweet.png">احفظ الصورة</a>
+    <a class="btn" id="tweetLink" target="_blank" rel="noopener">افتح X وانشر</a>
+    <button class="btn white" id="closeSheet" type="button">إغلاق</button>
+  </div>
+</div>
+
+<div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+<script>
+{
+// ===== غيّر الحساب من هنا =====
+const HANDLE = "WIQAA_";
+// ==============================
+
+const SWEETS = [
+  {name:"ساندويتش آيس كريم", img:"/img/sandwich.png", burst:"teal",
+   desc:"بارد وهادي وتنعش كل مكان تدخله. أنت اللي يخفف الجو، بس انتبه لا تذوب قبل لا تخلّص."},
+  {name:"حلاوة بقرة", img:"/img/baqara.png", burst:"purple",
+   desc:"حلو وهادي وكلاسيكي، وطعمك يرجّع الناس لأيام الطفولة. أنت الذكرى اللي الكل يبتسم لها."},
+  {name:"توتي فروتي", img:"/img/tutti.png", burst:"teal",
+   desc:"ألوان وحماس وفوضى حلوة. تجيب البهجة وين ما رحت، وما أحد يعرف وش بتسوي بعدين."},
+  {name:"فش فاش", img:"/img/fishfash.png", burst:"purple",
+   desc:"صوتك عالي وكل الناس تحبك. تحوّل أي يوم عادي إلى حفلة، وأصابعك صفراء وانت مبسوط."},
+  {name:"ميني برجر", img:"/img/burger.png", burst:"teal",
+   desc:"غريب وطريف ومفاجأة حلوة. شكلك ما يشبه أحد، وكل من جرّبك قال: «وش هذا؟» بس بعدين طلب غيره."}
+];
+
+// كل سؤال: الإجابات بالترتيب = ساندويتش، حلاوة بقرة، توتي فروتي، فش فاش، ميني برجر
+const QUESTIONS = [
+  {q:"بعد المدرسة، وش تسوي أول شي؟", a:["أبرّد على نفسي وأرتاح","أجلس قدام الكرتون وما أبي أحد يكلمني","أطلع ألعب برا على طول","أدخل المطبخ مع الشلة","أسوي شي غريب ما أحد يتوقعه"]},
+  {q:"وش دورك في الملعب؟", a:["اللي يهدّي الجو لما أحد يتعارك","اللي يسولف على الجنب","اللي يخترع قوانين جديدة","اللي الكل يتبعه من صوته","اللي يجيب لعبة ما أحد شافها"]},
+  {q:"حفلة عيد ميلاد، وين تلقاك؟", a:["أول واحد عند الآيس كريم","أفوز بالكراسي الموسيقية بهدوء","أبدأ حفلة الرقص","آخذ أكبر قطعة كيك","ألبس شي غريب وأضحّك الكل"]},
+  {q:"كرتون صباح الجمعة، وش حالك؟", a:["أتفرج وأنا مبرّد بالمكيف","نفس الحلقة المفضلة دايم","أغيّر القنوات بحماس","أغنّي معاهم بصوت عالي","أقلّد الشخصيات وأضحّك العائلة"]},
+  {q:"وش في شنطتك المدرسية؟", a:["قارورة ماي مبرّدة","دفتر ذكريات وصور","ملصقات كثيرة","سندويتش مدعوك بس لذيذ","غراض غريبة ما أعرف من وين جبتها"]},
+  {q:"أصحابك يقولون عنك إنك…", a:["رايق","تعتمد عليك","ما أحد يتوقع وش بتسوي","روح الحفلة","طريف وغريب بشكل حلو"]}
+];
+
+const AR = n => String(n).replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+const $ = id => document.getElementById(id);
+const screens = ["cover","quiz","result"].map($);
+let picks = [], i = 0, busy = false, current = null, cardBlob = null, cardURL = "";
+const tweetText = S => "طلعت لي " + S.name + "! أي حلاوة من طفولتك أنت؟ جرّب الاختبار من @" + HANDLE;
+const resultURL = S => location.origin + "/r/" + SWEETS.indexOf(S) + "/";
+const inApp = /Twitter|FBAN|FBAV|Instagram|Snapchat|TikTok|Line\//i.test(navigator.userAgent);
+
+// ---------- result image (1080×1350) ----------
+const loadImg = src => new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = src; });
+const IMGS = {logo:document.querySelector(".logo").src, boy:document.querySelector(".hero.boy").src, girl:document.querySelector(".hero.girl").src};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function fit(im,maxW,maxH){const k=Math.min(maxW/im.width,maxH/im.height);return [im.width*k,im.height*k];}
+function wrap(c,text,maxW){const words=text.split(" ");const lines=[];let line="";for(const w of words){const t=line?line+" "+w:w;if(c.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;}if(line)lines.push(line);return lines;}
+async function makeCard(S){
+  try{ await Promise.all([document.fonts.load('400 100px Lalezar'),document.fonts.load('800 40px Cairo')]); }catch(e){}
+  const [logo,boy,girl,sweet]=await Promise.all([loadImg(IMGS.logo),loadImg(IMGS.boy),loadImg(IMGS.girl),loadImg(S.img)]);
+  const W=1080,H=1350,cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");
+  const NAVY="#2b1a5c",P="#7b4fbf",P2="#9b74d6",T="#5ccfd0",T2="#8fe3e3",CREAM="#fffaf0";
+  const DISP='"Lalezar","Cairo",sans-serif',BODY='"Cairo",system-ui,sans-serif';
+  // background + dots
+  const g=c.createRadialGradient(W/2,380,60,W/2,600,900);g.addColorStop(0,"#7cc4f8");g.addColorStop(.6,"#66b8f5");g.addColorStop(1,"#4fa6e8");
+  c.fillStyle=g;c.fillRect(0,0,W,H);
+  c.fillStyle="rgba(255,255,255,.28)";for(let y=12;y<H;y+=34)for(let x=12;x<W;x+=34){c.beginPath();c.arc(x,y,4,0,7);c.fill();}
+  // top ribbon
+  c.save();c.beginPath();c.rect(0,0,W,40);c.clip();const cols=[P,"#fff",T,"#fff"];const wds=[30,18,30,18];let x0=-80,k=0;
+  while(x0<W+80){c.fillStyle=cols[k%4];c.beginPath();c.moveTo(x0,40);c.lineTo(x0+40,0);c.lineTo(x0+40+wds[k%4],0);c.lineTo(x0+wds[k%4],40);c.fill();x0+=wds[k%4];k++;}
+  c.restore();c.fillStyle=NAVY;c.fillRect(0,40,W,7);
+  // heroes on the edges + logo
+  let [bw,bh]=fit(boy,230,330);c.drawImage(boy,0,70,bw,bh);
+  let [gw,gh]=fit(girl,210,380);c.drawImage(girl,W-gw,90,gw,gh);
+  let [lw,lh]=fit(logo,190,190);c.drawImage(logo,(W-lw)/2,66,lw,lh);
+  // title
+  c.direction="rtl";c.textAlign="center";c.textBaseline="alphabetic";c.lineJoin="round";
+  c.font="400 58px "+DISP;c.lineWidth=12;c.strokeStyle=NAVY;c.fillStyle=NAVY;c.fillText("أي حلاوة من طفولتك أنت؟",W/2,334+6);
+  c.strokeText("أي حلاوة من طفولتك أنت؟",W/2,334);c.fillStyle="#fff";c.fillText("أي حلاوة من طفولتك أنت؟",W/2,334);
+  // card
+  const cx=90,cy=380,cw=900,ch=860,r=28;
+  c.fillStyle=NAVY;rr(c,cx+10,cy+14,cw,ch,r);c.fill();
+  c.fillStyle=CREAM;rr(c,cx,cy,cw,ch,r);c.fill();
+  // sunburst
+  const bh2=430;c.save();rr(c,cx,cy,cw,ch,r);c.clip();
+  const isT=S.burst==="teal",a1=isT?T:P,a2=isT?T2:P2,ox=W/2,oy=cy+bh2*.55;
+  c.fillStyle=a1;c.fillRect(cx,cy,cw,bh2);c.fillStyle=a2;
+  for(let a=0;a<360;a+=24){const r1=a*Math.PI/180,r2=(a+12)*Math.PI/180;c.beginPath();c.moveTo(ox,oy);c.lineTo(ox+1400*Math.cos(r1),oy+1400*Math.sin(r1));c.lineTo(ox+1400*Math.cos(r2),oy+1400*Math.sin(r2));c.closePath();c.fill();}
+  c.fillStyle=CREAM;c.fillRect(cx,cy+bh2,cw,ch-bh2);
+  const glow=c.createRadialGradient(ox,oy,0,ox,oy,230);glow.addColorStop(0,"rgba(255,255,255,1)");glow.addColorStop(.45,"rgba(255,255,255,.7)");glow.addColorStop(1,"rgba(255,255,255,0)");
+  c.fillStyle=glow;c.fillRect(cx,cy,cw,bh2);
+  c.fillStyle=NAVY;c.fillRect(cx,cy+bh2,cw,7);
+  c.restore();
+  // sweet
+  let [sw,sh]=fit(sweet,560,370);c.save();c.translate(ox,cy+bh2/2+6);c.rotate(-4*Math.PI/180);
+  const sc=document.createElement("canvas");sc.width=Math.ceil(sw);sc.height=Math.ceil(sh);const sx=sc.getContext("2d");sx.drawImage(sweet,0,0,sw,sh);sx.globalCompositeOperation="source-in";sx.fillStyle="#000";sx.fillRect(0,0,sc.width,sc.height);
+  c.globalAlpha=.4;c.drawImage(sc,-sw/2+10,-sh/2+14);c.globalAlpha=1;
+  c.drawImage(sweet,-sw/2,-sh/2,sw,sh);c.restore();
+  // border
+  c.lineWidth=8;c.strokeStyle=NAVY;rr(c,cx,cy,cw,ch,r);c.stroke();
+  // tag "طلعت لي"
+  c.font="400 40px "+DISP;const tag="طلعت لي…",tw=c.measureText(tag).width+56;
+  c.save();c.translate(W/2,cy+bh2+12);c.rotate(-3*Math.PI/180);c.fillStyle=NAVY;rr(c,-tw/2,-30,tw,64,16);c.fill();c.fillStyle="#fff";c.fillText(tag,0,16);c.restore();
+  // name
+  let ns=112;c.font="400 "+ns+"px "+DISP;while(c.measureText(S.name).width>cw-80&&ns>60){ns-=6;c.font="400 "+ns+"px "+DISP;}
+  const ny=cy+bh2+165;c.lineWidth=14;c.strokeStyle=NAVY;c.fillStyle=P;c.fillText(S.name,W/2,ny+10);
+  c.fillStyle=NAVY;c.fillText(S.name,W/2,ny+5);c.strokeText(S.name,W/2,ny);c.fillStyle="#fff";c.fillText(S.name,W/2,ny);
+  // description
+  const py=cy+ch-84,top=ny+34,room=py-14-top;let fs=38,dh,lines;
+  for(;fs>=24;fs-=2){c.font="800 "+fs+"px "+BODY;dh=Math.round(fs*1.45);lines=wrap(c,S.desc,cw-90);if(lines.length*dh<=room)break;}
+  c.fillStyle=NAVY;const ty=top+(room-lines.length*dh)/2+dh*0.78;
+  lines.forEach((l,n)=>c.fillText(l,W/2,ty+n*dh));
+  // handle pill
+  c.font="400 42px "+DISP;c.direction="ltr";const hd="@"+HANDLE,hw=c.measureText(hd).width+64;
+  c.fillStyle=T;rr(c,(W-hw)/2,py,hw,64,32);c.fill();c.lineWidth=5;c.stroke();c.fillStyle=NAVY;c.fillText(hd,W/2,py+46);
+  // bottom strip
+  c.direction="rtl";c.fillStyle=NAVY;c.fillRect(0,H-82,W,82);c.fillStyle="#fff";c.font="400 40px "+DISP;
+  c.fillText("✦  جرّب الاختبار واعرف حلاوتك  ✦",W/2,H-26);
+  return await new Promise((ok,no)=>cv.toBlob(b=>b?ok(b):no(new Error("blob")),"image/png"));
+}
+
+async function shareCard(ev){
+  if (!current) return;
+  ev.preventDefault();
+  const btn = $("share"); btn.setAttribute("aria-busy","true");
+  try{
+    const blob = cardBlob || await makeCard(current); cardBlob = blob;
+    const file = new File([blob], "my-sweet.png", {type:"image/png"});
+    if (navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file], text: tweetText(current) + "\n" + resultURL(current)}); return; }
+      catch(e){ if (e && e.name === "AbortError") return; }
+    }
+    cardURL = await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(blob);});
+    $("cardImg").src = cardURL; $("saveImg").href = cardURL;
+    if (inApp){ $("saveImg").hidden = true; $("steps1").textContent = "١. اضغط على الصورة مطوّلًا واحفظها"; }
+    $("sheet").hidden = false; $("closeSheet").focus();
+  }catch(e){
+    window.open($("share").href, "_blank", "noopener");
+  }finally{ btn.removeAttribute("aria-busy"); }
+}
+
+// marquee text
+{
+  const bits = ["وش حلاوتك؟","اختبار الطفولة","@" + HANDLE,"جرّب وشارك نتيجتك"];
+  const mq = $("mq");
+  for (let r = 0; r < 3; r++) bits.forEach(t => {
+    const s = document.createElement("span"); s.textContent = "✦";
+    mq.append(document.createTextNode(t), s);
+  });
+}
+
+function show(id){
+  screens.forEach(s => s.classList.toggle("on", s.id === id));
+  window.scrollTo(0,0);
+}
+
+function renderQ(){
+  const Q = QUESTIONS[i];
+  $("count").textContent = "السؤال " + AR(i+1) + " من " + AR(QUESTIONS.length);
+  [...$("pieces").children].forEach((p,k) => p.classList.toggle("done", k <= i));
+  $("pieces").setAttribute("aria-valuenow", i+1);
+  $("back").hidden = i === 0;
+  $("qtext").textContent = Q.q;
+  const box = $("answers"); box.innerHTML = "";
+  Q.a.forEach((txt, k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "ans";
+    const n = document.createElement("b"); n.textContent = AR(k+1);
+    const t = document.createElement("span"); t.textContent = txt;
+    b.append(n, t);
+    b.addEventListener("click", () => choose(k, b));
+    box.append(b);
+  });
+  const s = $("quiz"); s.classList.remove("on"); void s.offsetWidth; s.classList.add("on");
+}
+
+function choose(k, el){
+  if (busy) return; busy = true;
+  el.classList.add("picked");
+  picks[i] = k;
+  setTimeout(() => {
+    busy = false;
+    if (i < QUESTIONS.length - 1){ i++; renderQ(); }
+    else finish();
+  }, 240);
+}
+
+function finish(){
+  const score = [0,0,0,0,0];
+  picks.forEach(k => score[k]++);
+  const top = Math.max(...score);
+  const tied = score.map((v,k) => v === top ? k : -1).filter(k => k >= 0);
+  const w = tied[Math.floor(Math.random()*tied.length)];
+  const S = SWEETS[w];
+
+  $("rimg").src = S.img; $("rimg").alt = S.name;
+  $("burst").className = "burst" + (S.burst === "teal" ? " teal" : "");
+  $("rname").textContent = S.name;
+  $("rdesc").textContent = S.desc;
+  $("pill").textContent = "@" + HANDLE;
+
+  current = S;
+  const tweet = tweetText(S);
+  $("share").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet) + "&url=" + encodeURIComponent(resultURL(S));
+  $("tweetLink").href = $("share").href;
+  cardBlob = null; makeCard(S).then(b => { if (current === S) cardBlob = b; }).catch(() => {});
+  show("result");
+}
+
+{
+  const t = document.createElement("span"); t.textContent = "تابعنا ";
+  const h = document.createElement("bdi"); h.dir = "ltr"; h.textContent = "@" + HANDLE;
+  $("follow").href = "https://twitter.com/intent/follow?screen_name=" + encodeURIComponent(HANDLE);
+  $("follow").append(t, h);
+}
+
+$("share").addEventListener("click", shareCard);
+// Saving: on Claude's viewer use its downloads capability; elsewhere the plain download link works.
+let dlNS = null;
+if (window.claude && typeof window.claude.use === "function"){
+  window.claude.use("downloads").then(ns => { dlNS = ns; }).catch(() => {});
+}
+$("saveImg").addEventListener("click", ev => {
+  if (!dlNS || !cardBlob) return;
+  ev.preventDefault();
+  dlNS.save({filename:"my-sweet.png", data:cardBlob}).catch(err => {
+    if (err && err.code === "declined") return;
+    $("saveImg").textContent = "اضغط على الصورة مطوّلًا لحفظها";
+  });
+});
+$("closeSheet").addEventListener("click", () => { $("sheet").hidden = true; });
+$("sheet").addEventListener("click", e => { if (e.target.id === "sheet") $("sheet").hidden = true; });
+document.addEventListener("keydown", e => { if (e.key === "Escape") $("sheet").hidden = true; });
+$("start").addEventListener("click", () => { picks = []; i = 0; show("quiz"); renderQ(); });
+$("back").addEventListener("click", () => { if (i > 0){ i--; renderQ(); } });
+$("again").addEventListener("click", () => { picks = []; i = 0; $("rimg").removeAttribute("src"); show("cover"); });
+}
+</script>
+</body>
+</html>
